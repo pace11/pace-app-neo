@@ -4,3 +4,17 @@ services:
     container_name: nextjs
     ports:
       - "8081:3000"
+
+  cycloop:
+    build: ./cycloop
+    container_name: cycloop
+    restart: always
+    networks:
+      - backend
+    ports:
+      - "8410:4100"
+    env_file:
+      - ./cycloop/.env
+
+networks:
+  backend:
