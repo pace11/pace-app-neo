@@ -1,12 +1,4 @@
 services:
-  nextjs:
-    build: ./nextjs
-    container_name: nextjs
-    networks:
-      - frontend
-    expose:
-      - 3000
-
   nginx:
     image: nginx:latest
     container_name: nginx
@@ -24,12 +16,14 @@ services:
       - frontend
 
   certbot:
-    image: certbot/dns-cloudflare
+    image: certbot/certbot
     container_name: certbot
     volumes:
+      - ./certbot/www:/var/www/certbot
       - ./certbot/conf:/etc/letsencrypt
-      - ./cloudflare.ini:/cloudflare.ini:ro
-    command: certonly --dns-cloudflare --dns-cloudflare-credentials /cloudflare.ini --dns-cloudflare-propagation-seconds 30 -d next.pace11.my.id --agree-tos --non-interactive -m rppratama1771@email.com
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do sleep 3600; done'"
+    networks:
+      - frontend
 
 networks:
   frontend:
