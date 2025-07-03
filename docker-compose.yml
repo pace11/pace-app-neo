@@ -5,6 +5,28 @@ services:
     ports:
       - "8081:3000"
 
+  absensi:
+    build: ./absensi-web
+    container_name: absensi
+    networks:
+      - backend
+    ports:
+      - "8082:3000"
+  
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    restart: always
+    ports:
+      - "8306:80"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./mysql/init:/docker-entrypoint-initdb.d
+    networks:
+      - backend
+
   cycloop:
     build: ./cycloop
     container_name: cycloop
