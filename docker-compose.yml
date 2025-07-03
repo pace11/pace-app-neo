@@ -38,5 +38,8 @@ services:
     env_file:
       - ./cycloop/.env
 
+volumes:
+  mysql-data:
+
 networks:
   backend:
