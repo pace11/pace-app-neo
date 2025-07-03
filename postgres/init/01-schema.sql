@@ -1,0 +1,3 @@
+CREATE DATABASE outline;
+
+GRANT ALL PRIVILEGES ON DATABASE outline TO commonuser;
