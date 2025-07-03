@@ -47,8 +47,97 @@ services:
     env_file:
       - ./cycloop/.env
 
+  outline:
+    image: outlinewiki/outline:latest
+    container_name: outline-blog
+    restart: always
+    networks:
+      - backend
+    environment:
+      SECRET_KEY: ${OL_SECRET_KEY}
+      UTILS_SECRET: ${OL_UTILS_SECRET}
+      DATABASE_URL: ${OL_DB_URL}
+      REDIS_URL: ${OL_REDIS_URL}
+      URL: ${OL_URL}
+      OIDC_CLIENT_ID: ${OL_OIDC_CLIENT_ID}
+      OIDC_CLIENT_SECRET: ${OL_OIDC_CLIENT_SECRET}
+      OIDC_AUTH_URI: ${OL_OIDC_AUTH_URI}
+      OIDC_LOGOUT_URI: ${OL_OIDC_LOGOUT_URI}
+      OIDC_TOKEN_URI: ${OL_OIDC_TOKEN_URI}
+      OIDC_USERINFO_URI: ${OL_OIDC_USERINFO_URI}
+      OIDC_USERNAME_CLAIM: ${OL_OIDC_USERNAME_CLAIM}
+      OIDC_DISPLAY_NAME: ${OL_OIDC_DISPLAY_NAME}
+      OIDC_SCOPES: ${OL_OIDC_SCOPES}
+      PGSSLMODE: ${OL_PGSSLMODE}
+      AWS_ACCESS_KEY_ID: ${MINIO_ROOT_USER}
+      AWS_SECRET_ACCESS_KEY: ${MINIO_ROOT_PASSWORD}
+      AWS_REGION: ${OL_AWS_REGION}
+      AWS_S3_UPLOAD_BUCKET_NAME: ${OL_AWS_S3_UPLOAD_BUCKET_NAME}
+      AWS_S3_UPLOAD_BUCKET_URL: ${OL_AWS_S3_UPLOAD_BUCKET_URL}
+      AWS_S3_UPLOAD_BUCKET_PUBLIC_URL: ${OL_AWS_S3_UPLOAD_BUCKET_PUBLIC_URL}
+      AWS_S3_FORCE_PATH_STYLE: ${OL_AWS_S3_FORCE_PATH_STYLE}
+      AWS_S3_ACL: ${OL_AWS_S3_ACL}
+    ports:
+      - "8083:3000"
+    depends_on:
+      - postgres
+      - redis
+
+  postgres:
+    image: postgres:13
+    container_name: postgres
+    restart: always
+    networks:
+      - backend
+    environment:
+      POSTGRES_USER: ${PG_USER}
+      POSTGRES_PASSWORD: ${PG_PASSWORD}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./postgres/init:/docker-entrypoint-initdb.d
+
+  redis:
+    image: redis:alpine
+    container_name: redis
+    restart: always
+    networks:
+      - backend
+
+  minio:
+    image: minio/minio:latest
+    container_name: minio
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - ./minio-data:/data
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
+    command: server /data --console-address ":9001"
+    networks:
+      - backend
+  
+  vaultwarden:
+    image: vaultwarden/server:latest
+    container_name: vaultwarden
+    restart: unless-stopped
+    environment:
+      ADMIN_TOKEN: ${VW_ADMIN_TOKEN}
+      SIGNUPS_ALLOWED: ${VW_SIGNUPS_ALLOWED}
+      WEBSOCKET_ENABLED: ${VW_WEBSOCKET_ENABLED}
+    volumes:
+      - vaultwarden-data:/data
+    ports:
+      - "8084:80"
+    networks:
+    - backend
+
 volumes:
   mysql-data:
+  minio-data:
+  vaultwarden-data:
+  pgdata:
 
 networks:
   backend:
