@@ -17,8 +17,6 @@ services:
     image: mysql:8.0
     container_name: mysql
     restart: always
-    ports:
-      - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     volumes:
@@ -26,6 +24,17 @@ services:
       - ./mysql/init:/docker-entrypoint-initdb.d
     networks:
       - backend
+  
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    restart: always
+    environment:
+      PMA_HOST: mysql
+    networks:
+      - backend
+    ports:
+      - "8306:80"
 
   cycloop:
     build: ./cycloop
