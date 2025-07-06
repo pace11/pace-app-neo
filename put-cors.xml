@@ -1,4 +1,4 @@
-<CORSConfiguration>
+<CORSConfiguration xmlns="http://s3.amazonaws.com/doc/2006-03-01/">
   <CORSRule>
     <AllowedOrigin>https://blog.pace11.my.id</AllowedOrigin>
     <AllowedMethod>GET</AllowedMethod>
