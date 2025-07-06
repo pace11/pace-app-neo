@@ -1,9 +1,0 @@
-<CORSConfiguration xmlns="http://s3.amazonaws.com/doc/2006-03-01/">
-  <CORSRule>
-    <AllowedOrigin>https://blog.pace11.my.id</AllowedOrigin>
-    <AllowedMethod>GET</AllowedMethod>
-    <AllowedMethod>PUT</AllowedMethod>
-    <AllowedMethod>POST</AllowedMethod>
-    <AllowedHeader>*</AllowedHeader>
-  </CORSRule>
-</CORSConfiguration>
