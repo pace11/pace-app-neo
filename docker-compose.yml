@@ -12,6 +12,17 @@ services:
       - backend
     ports:
       - "8082:3000"
+
+  recipe-foods:
+    build: ./share-recipe-foods
+    container_name: recipe-foods
+    env_file:
+      - ./share-recipe-foods/.env
+    networks:
+      - frontend
+      - backend
+    ports:
+      - "8085:3000"
   
   mysql:
     image: mysql:8.0
@@ -46,6 +57,19 @@ services:
       - "8410:4100"
     env_file:
       - ./cycloop/.env
+
+  service-go:
+    build: ./service-go
+    container_name: service-go
+    restart: always
+    networks:
+      - backend
+    ports:
+      - "8411:4000"
+    env_file:
+      - ./service-go/.env
+    depends_on:
+      - mysql
 
   outline:
     image: outlinewiki/outline:latest
@@ -141,3 +165,4 @@ volumes:
 
 networks:
   backend:
+  frontend:
