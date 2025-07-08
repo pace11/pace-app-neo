@@ -84,6 +84,8 @@ services:
       - ./web-pln-api/.env
     depends_on:
       - mysql
+    volumes:
+      - ./web-pln-api:/var/www
 
   nginx:
     image: nginx:alpine
