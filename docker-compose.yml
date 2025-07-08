@@ -77,7 +77,7 @@ services:
     restart: always
     networks:
       - backend
-    expose:
+    ports:
       - "8412:9000"
     env_file:
       - ./web-pln-api/.env
