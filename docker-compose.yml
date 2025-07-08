@@ -70,6 +70,19 @@ services:
       - ./service-go/.env
     depends_on:
       - mysql
+  
+  service-pln:
+    build: ./web-pln-api
+    container_name: service-pln
+    restart: always
+    networks:
+      - backend
+    expose:
+      - "8412:9000"
+    env_file:
+      - ./web-pln-api/.env
+    depends_on:
+      - mysql
 
   outline:
     image: outlinewiki/outline:latest
