@@ -75,6 +75,15 @@ services:
     depends_on:
       - mysql
   
+  weather-api:
+    build: ./weather-api
+    container_name: weather-api
+    restart: always
+    networks:
+      - backend
+    ports:
+      - "8413:4200"
+  
   service-pln:
     build: ./web-pln-api
     container_name: service-pln
