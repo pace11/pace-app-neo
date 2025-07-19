@@ -1,14 +1,4 @@
 services:
-  next-pln:
-    build: ./next-pln
-    container_name: next-pln
-    env_file:
-      - ./next-pln/.env
-    networks:
-      - frontend
-    ports:
-      - "8081:3000"
-
   absensi:
     build: ./absensi-web
     container_name: absensi
@@ -83,22 +73,6 @@ services:
       - backend
     ports:
       - "8413:4200"
-  
-  service-pln:
-    build: ./web-pln-api
-    container_name: service-pln
-    restart: always
-    networks:
-      - backend
-      - laravel_net
-    expose:
-      - "9000"
-    env_file:
-      - ./web-pln-api/.env
-    depends_on:
-      - mysql
-    volumes:
-      - ./web-pln-api:/var/www
 
   nginx:
     image: nginx:alpine
