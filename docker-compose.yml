@@ -182,4 +182,3 @@ volumes:
 networks:
   backend:
   frontend:
-  laravel_net:
