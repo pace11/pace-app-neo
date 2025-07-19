@@ -72,7 +72,7 @@ services:
     networks:
       - backend
     ports:
-      - "8413:4200"
+      - "8412:4200"
 
   # nginx:
   #   image: nginx:alpine
