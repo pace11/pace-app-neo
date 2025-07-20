@@ -1,14 +1,19 @@
-<h1 align="center">PACE APP</h1>
+<h1 align="center">PACE APP NEO 🔩</h1>
+<p align="center">A containerized backend platform for managing services like Qurban integration with mosques across Indonesia. Built using Docker Compose, this project combines NGINX, PostgreSQL, and MySQL to support scalable and secure deployments.</p>
 
-A containerized backend platform for managing services like Qurban integration with mosques across Indonesia. Built using Docker Compose, this project combines NGINX, PostgreSQL, and MySQL to support scalable and secure deployments.
-
-## 🧰 Tech Stack
+## 🧰 Running Service
 
 - **Docker Compose**
+- **Nginx (Reverse Proxy)**
 - **PostgreSQL**
 - **MySQL**
+- **Redis**
 - **NGINX**
-- Custom backend service (language unspecified)
+- **Backend Service (Go, Ts, Graphql, PHP)**
+- **Frontend (Next.js)**
+- **Minio (Object Storage)**
+- **Outline (Web Blog)**
+- **Vaultwarden**
 
 ## 📁 Folder Structure
 
