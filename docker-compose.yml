@@ -17,6 +17,14 @@ services:
       - backend
     ports:
       - "8085:3000"
+
+  readable-app:
+    image: pace1196/readable-app:latest
+    restart: always
+    networks:
+      - frontend
+    ports:
+      - "8086:80"
   
   mysql:
     image: mysql:8.0
