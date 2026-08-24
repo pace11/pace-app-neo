@@ -27,7 +27,12 @@ services:
       - "8086:80"
 
   siklusku:
-    build: ./siklusku
+    build:
+      context: ./siklusku
+      dockerfile: Dockerfile
+      args:
+        AUTH_URL: ${AUTH_URL}
+        NEXT_PUBLIC_VAPID_PUBLIC_KEY: ${NEXT_PUBLIC_VAPID_PUBLIC_KEY}
     container_name: siklusku
     env_file:
       - ./siklusku/.env
