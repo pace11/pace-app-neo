@@ -25,6 +25,17 @@ services:
       - frontend
     ports:
       - "8086:80"
+
+  siklusku:
+    build: ./siklusku
+    container_name: siklusku
+    env_file:
+      - ./siklusku/.env
+    networks:
+      - frontend
+      - backend
+    ports:
+      - "8087:3000"
   
   mysql:
     image: mysql:8.0
