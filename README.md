@@ -41,7 +41,7 @@
    ```bash
    docker run --rm -v "$(pwd)/waha":/app/env --platform linux/amd64 devlikeapro/waha init-waha /app/env
    ```
-   On Apple Silicon / ARM hosts the compose image is `devlikeapro/waha:arm`.
+   On Apple Silicon / ARM hosts, change the compose image to `devlikeapro/waha:arm`.
 2. Set `WAHA_PUBLIC_URL` / hostname in `waha/.env` to your tunnel domain.
 3. Create a tunnel in Cloudflare Zero Trust → Networks → Tunnels.
 4. Put the Docker token into root `.env` as `CF_TUNNEL_TOKEN`.

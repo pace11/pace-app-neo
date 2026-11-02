@@ -202,8 +202,8 @@ services:
 
   # WhatsApp HTTP API — expose via Cloudflare Tunnel (no public port needed)
   waha:
-    # Use :arm on Apple Silicon / Raspberry Pi; :latest (amd64) on x86 servers
-    image: devlikeapro/waha:arm
+    # amd64 servers: waha / waha:latest | Apple Silicon / Pi: waha:arm
+    image: devlikeapro/waha:latest
     container_name: waha
     restart: always
     networks:
