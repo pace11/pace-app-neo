@@ -200,6 +200,45 @@ services:
     networks:
     - backend
 
+  # WhatsApp HTTP API — expose via Cloudflare Tunnel (no public port needed)
+  waha:
+    # Use :arm on Apple Silicon / Raspberry Pi; :latest (amd64) on x86 servers
+    image: devlikeapro/waha:arm
+    container_name: waha
+    restart: always
+    networks:
+      - backend
+    # Local-only dashboard/API access; public traffic goes through cloudflared
+    ports:
+      - "127.0.0.1:3000:3000"
+    volumes:
+      - ./waha/sessions:/app/.sessions
+      - ./waha/media:/app/.media
+    env_file:
+      - ./waha/.env
+    dns:
+      - 1.1.1.1
+      - 8.8.8.8
+    logging:
+      driver: json-file
+      options:
+        max-size: "100m"
+        max-file: "10"
+
+  # Cloudflare Tunnel — maps public hostname → http://waha:3000 (set in Zero Trust dashboard)
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: cloudflared
+    restart: unless-stopped
+    networks:
+      - backend
+      - frontend
+    command: tunnel run
+    environment:
+      TUNNEL_TOKEN: ${CF_TUNNEL_TOKEN}
+    depends_on:
+      - waha
+
 volumes:
   mysql-data:
   minio-data:

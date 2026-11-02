@@ -1,2 +1,9 @@
 # environment
 .env
+waha/.env
+
+# WAHA runtime data
+waha/sessions/*
+!waha/sessions/.gitkeep
+waha/media/*
+!waha/media/.gitkeep
